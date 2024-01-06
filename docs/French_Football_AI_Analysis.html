@@ -163,6 +163,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
+<p><strong>Repo Link</strong>: <a href="https://github.com/SherryS997/French-Football-AI-Analysis">https://github.com/SherryS997/French-Football-AI-Analysis</a></p>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p><img src="images/field_kiank.png" width="100%"></p>
@@ -210,7 +211,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>plt.scatter(train_X[<span class="dv">0</span>, :], train_X[<span class="dv">1</span>, :], c<span class="op">=</span>train_Y, s<span class="op">=</span><span class="dv">40</span>, cmap<span class="op">=</span>plt.cm.Spectral)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="football_files/figure-html/cell-3-output-1.png" class="img-fluid"></p>
+<p><img src="French_Football_AI_Analysis_files/figure-html/cell-3-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 </section>
@@ -758,7 +759,7 @@ On the test set:
 Accuracy: 0.915</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="football_files/figure-html/cell-15-output-2.png" class="img-fluid"></p>
+<p><img src="French_Football_AI_Analysis_files/figure-html/cell-15-output-2.png" class="img-fluid"></p>
 </div>
 </div>
 <p>The output displayed indicates the cost values at different iterations during the training process:</p>
@@ -772,7 +773,7 @@ Accuracy: 0.915</code></pre>
 <section id="model-training-and-evaluation-l2-regularization" class="level3">
 <h3 class="anchored" data-anchor-id="model-training-and-evaluation-l2-regularization">Model Training and Evaluation (L2 Regularization)</h3>
 <p>This section involves training and evaluating the neural network model while applying L2 regularization with a regularization parameter (<code>lambd</code>) set to 0.7. The provided code snippet executes the model training on the <code>train_X</code> and <code>train_Y</code> datasets, followed by evaluating the trained model’s predictions on both the training and test datasets (<code>test_X</code>, <code>test_Y</code>).</p>
-<div class="cell" data-execution_count="15">
+<div class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>parameters <span class="op">=</span> model(train_X, train_Y, lambd <span class="op">=</span> <span class="fl">0.7</span>)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">"On the train set:"</span>)</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>predictions_train <span class="op">=</span> predict(train_X, train_Y, parameters)</span>
@@ -788,7 +789,7 @@ On the test set:
 Accuracy: 0.93</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="football_files/figure-html/cell-16-output-2.png" class="img-fluid"></p>
+<p><img src="French_Football_AI_Analysis_files/figure-html/cell-16-output-2.png" class="img-fluid"></p>
 </div>
 </div>
 <p>The displayed output showcases the cost values at different iterations during the training process:</p>
@@ -802,7 +803,7 @@ Accuracy: 0.93</code></pre>
 <section id="model-training-and-evaluation-dropout-regularization" class="level3">
 <h3 class="anchored" data-anchor-id="model-training-and-evaluation-dropout-regularization">Model Training and Evaluation (Dropout Regularization)</h3>
 <p>This section focuses on training and evaluating the neural network model with the application of Dropout regularization. The code snippet demonstrates the training of the model by specifying a dropout probability of 0.86 (<code>keep_prob = 0.86</code>) and a learning rate of 0.3 (<code>learning_rate = 0.3</code>).</p>
-<div class="cell" data-execution_count="16">
+<div class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>parameters <span class="op">=</span> model(train_X, train_Y, keep_prob <span class="op">=</span> <span class="fl">0.86</span>, learning_rate <span class="op">=</span> <span class="fl">0.3</span>)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">"On the train set:"</span>)</span>
@@ -819,13 +820,13 @@ On the test set:
 Accuracy: 0.95</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/tmp/ipykernel_39758/630415195.py:43: RuntimeWarning: divide by zero encountered in log
+<pre><code>/tmp/ipykernel_42223/630415195.py:43: RuntimeWarning: divide by zero encountered in log
   logprobs = np.multiply(-np.log(a3),Y) + np.multiply(-np.log(1 - a3), 1 - Y)
-/tmp/ipykernel_39758/630415195.py:43: RuntimeWarning: invalid value encountered in multiply
+/tmp/ipykernel_42223/630415195.py:43: RuntimeWarning: invalid value encountered in multiply
   logprobs = np.multiply(-np.log(a3),Y) + np.multiply(-np.log(1 - a3), 1 - Y)</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="football_files/figure-html/cell-17-output-3.png" class="img-fluid"></p>
+<p><img src="French_Football_AI_Analysis_files/figure-html/cell-17-output-3.png" class="img-fluid"></p>
 </div>
 </div>
 <p>The output provided indicates the cost values at different iterations during the training process:</p>
@@ -846,7 +847,7 @@ Accuracy: 0.95</code></pre>
 <li><p><code>plot_decision_boundary(model, X, y)</code>: This function generates and plots the decision boundary for the binary classification model. It sets the minimum and maximum values for the x and y axes, creates a grid of points with a specified distance between them, predicts the function values for the entire grid, and plots the contour plot of the decision boundary. Additionally, it overlays the training examples on the plot, coloring them based on the class label (<code>y</code>).</p></li>
 </ol>
 <p>The <code>plot_decision_boundary</code> function effectively illustrates how the model distinguishes between different classes by visualizing their decision boundary on a 2D plane. The plot showcases the regions where the model predicts each class, aiding in the interpretation and evaluation of the classifier’s performance.</p>
-<div class="cell" data-execution_count="17">
+<div class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> predict_dec(parameters, X):</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Used for plotting decision boundary.</span></span>
@@ -883,40 +884,40 @@ Accuracy: 0.95</code></pre>
 </div>
 <section id="visualizing-model-performance-without-regularization" class="level3">
 <h3 class="anchored" data-anchor-id="visualizing-model-performance-without-regularization">Visualizing Model Performance without Regularization</h3>
-<div class="cell" data-execution_count="18">
+<div class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Model without regularization"</span>)</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>axes <span class="op">=</span> plt.gca()</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>axes.set_xlim([<span class="op">-</span><span class="fl">0.75</span>,<span class="fl">0.40</span>])</span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>axes.set_ylim([<span class="op">-</span><span class="fl">0.75</span>,<span class="fl">0.65</span>])</span>
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>plot_decision_boundary(<span class="kw">lambda</span> x: predict_dec(parameters, x.T), train_X, train_Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="football_files/figure-html/cell-19-output-1.png" class="img-fluid"></p>
+<p><img src="French_Football_AI_Analysis_files/figure-html/cell-19-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 </section>
 <section id="visualizing-model-performance-with-l2-regularization" class="level3">
 <h3 class="anchored" data-anchor-id="visualizing-model-performance-with-l2-regularization">Visualizing Model Performance with L2 Regularization</h3>
-<div class="cell" data-execution_count="19">
+<div class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Model with L2-regularization"</span>)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>axes <span class="op">=</span> plt.gca()</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>axes.set_xlim([<span class="op">-</span><span class="fl">0.75</span>,<span class="fl">0.40</span>])</span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>axes.set_ylim([<span class="op">-</span><span class="fl">0.75</span>,<span class="fl">0.65</span>])</span>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>plot_decision_boundary(<span class="kw">lambda</span> x: predict_dec(parameters, x.T), train_X, train_Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="football_files/figure-html/cell-20-output-1.png" class="img-fluid"></p>
+<p><img src="French_Football_AI_Analysis_files/figure-html/cell-20-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 </section>
 <section id="visualizing-model-performance-with-dropout" class="level3">
 <h3 class="anchored" data-anchor-id="visualizing-model-performance-with-dropout">Visualizing Model Performance with Dropout</h3>
-<div class="cell" data-execution_count="20">
+<div class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Model with dropout"</span>)</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>axes <span class="op">=</span> plt.gca()</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>axes.set_xlim([<span class="op">-</span><span class="fl">0.75</span>,<span class="fl">0.40</span>])</span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>axes.set_ylim([<span class="op">-</span><span class="fl">0.75</span>,<span class="fl">0.65</span>])</span>
 <span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>plot_decision_boundary(<span class="kw">lambda</span> x: predict_dec(parameters, x.T), train_X, train_Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="football_files/figure-html/cell-21-output-1.png" class="img-fluid"></p>
+<p><img src="French_Football_AI_Analysis_files/figure-html/cell-21-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 </section>

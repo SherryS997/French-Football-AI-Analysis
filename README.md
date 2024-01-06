@@ -24,7 +24,7 @@ This repository contains the code and resources for a machine learning project f
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/Sherry/French_Football_AI_Analysis.git
+   git clone https://github.com/SherryS997/French-Football-AI-Analysis.git
    ```
 
 2. Open and run the `French_Football_AI_Analysis.ipynb` Jupyter Notebook in an environment with the required dependencies installed.
