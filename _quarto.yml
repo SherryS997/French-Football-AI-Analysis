@@ -1,0 +1,21 @@
+project:
+  type: website
+  output-dir: docs
+
+css:
+  - https://lalten.github.io/lmweb/style/latinmodern-roman.css
+  - https://lalten.github.io/lmweb/style/latinmodern-mono.css
+mainfont: "Latin Modern Roman"
+fontsize: 14pt
+fontfamilyoptions: "oblique"
+monofont: "Latin Modern Mono"
+highlight-style: "tango"
+
+
+format:
+  html:
+    theme:
+      light: [zephyr, styles_light.scss]
+      dark: [darkly, styles.scss]
+    code-copy: true
+    toc: true

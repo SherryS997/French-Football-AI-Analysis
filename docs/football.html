@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Exploring Regularization Techniques in Neural Networks for French Football Corporation</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="https://lalten.github.io/lmweb/style/latinmodern-roman.css">
+<link rel="stylesheet" href="https://lalten.github.io/lmweb/style/latinmodern-mono.css">
+</head>
+
+<body>
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#data-loading-and-exploration" id="toc-data-loading-and-exploration" class="nav-link" data-scroll-target="#data-loading-and-exploration">Data Loading and Exploration</a>
+  <ul class="collapse">
+  <li><a href="#library-import-and-configuration" id="toc-library-import-and-configuration" class="nav-link" data-scroll-target="#library-import-and-configuration">Library Import and Configuration</a></li>
+  </ul></li>
+  <li><a href="#dataset-loading-and-visualization" id="toc-dataset-loading-and-visualization" class="nav-link" data-scroll-target="#dataset-loading-and-visualization">Dataset Loading and Visualization</a></li>
+  <li><a href="#neural-network-implementation" id="toc-neural-network-implementation" class="nav-link" data-scroll-target="#neural-network-implementation">Neural Network Implementation</a>
+  <ul class="collapse">
+  <li><a href="#neural-network-implementation-for-binary-classification" id="toc-neural-network-implementation-for-binary-classification" class="nav-link" data-scroll-target="#neural-network-implementation-for-binary-classification">Neural Network Implementation for Binary Classification</a></li>
+  <li><a href="#neural-network-model-with-regularization-and-dropout-techniques" id="toc-neural-network-model-with-regularization-and-dropout-techniques" class="nav-link" data-scroll-target="#neural-network-model-with-regularization-and-dropout-techniques">Neural Network Model with Regularization and Dropout Techniques</a></li>
+  </ul></li>
+  <li><a href="#model-training-and-evaluation" id="toc-model-training-and-evaluation" class="nav-link" data-scroll-target="#model-training-and-evaluation">Model Training and Evaluation</a>
+  <ul class="collapse">
+  <li><a href="#model-training-and-evaluation-no-regularization" id="toc-model-training-and-evaluation-no-regularization" class="nav-link" data-scroll-target="#model-training-and-evaluation-no-regularization">Model Training and Evaluation (No Regularization)</a></li>
+  <li><a href="#model-training-and-evaluation-l2-regularization" id="toc-model-training-and-evaluation-l2-regularization" class="nav-link" data-scroll-target="#model-training-and-evaluation-l2-regularization">Model Training and Evaluation (L2 Regularization)</a></li>
+  <li><a href="#model-training-and-evaluation-dropout-regularization" id="toc-model-training-and-evaluation-dropout-regularization" class="nav-link" data-scroll-target="#model-training-and-evaluation-dropout-regularization">Model Training and Evaluation (Dropout Regularization)</a></li>
+  </ul></li>
+  <li><a href="#visualization-of-results" id="toc-visualization-of-results" class="nav-link" data-scroll-target="#visualization-of-results">Visualization of Results</a>
+  <ul class="collapse">
+  <li><a href="#visualizing-model-performance-without-regularization" id="toc-visualizing-model-performance-without-regularization" class="nav-link" data-scroll-target="#visualizing-model-performance-without-regularization">Visualizing Model Performance without Regularization</a></li>
+  <li><a href="#visualizing-model-performance-with-l2-regularization" id="toc-visualizing-model-performance-with-l2-regularization" class="nav-link" data-scroll-target="#visualizing-model-performance-with-l2-regularization">Visualizing Model Performance with L2 Regularization</a></li>
+  <li><a href="#visualizing-model-performance-with-dropout" id="toc-visualizing-model-performance-with-dropout" class="nav-link" data-scroll-target="#visualizing-model-performance-with-dropout">Visualizing Model Performance with Dropout</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion:</a>
+  <ul class="collapse">
+  <li><a href="#overall-observations" id="toc-overall-observations" class="nav-link" data-scroll-target="#overall-observations">Overall Observations:</a></li>
+  <li><a href="#recommendations-and-future-work" id="toc-recommendations-and-future-work" class="nav-link" data-scroll-target="#recommendations-and-future-work">Recommendations and Future Work:</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Exploring Regularization Techniques in Neural Networks for French Football Corporation</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p><img src="images/field_kiank.png" width="100%"></p>
+<p>The application of neural networks in sports analytics has gained immense traction, revolutionizing strategies and decision-making processes. The French Football Corporation, seeking to optimize their team’s gameplay, has enlisted the expertise of an AI specialist. The task at hand involves recommending optimal positions for France’s goalkeepers to kick the ball, strategically positioning it for the team’s players to execute successful headers.</p>
+<p>This project aims to delve into the intricate realm of neural networks, exploring the effects of different regularization techniques – specifically, L2 regularization and Dropout. The analysis involves building a three-layer neural network from scratch using fundamental Python libraries like NumPy and SciPy, encapsulated within a Jupyter notebook environment.</p>
+<p>Through this investigation, the project endeavors to understand and demonstrate the impact of regularization on the network’s performance, focusing on mitigating overfitting and enhancing the model’s generalizability. Leveraging various datasets and visualization tools, the study aims to elucidate the nuances of these techniques and their implications in optimizing strategic decision-making in football gameplay.</p>
+<p>The project not only emphasizes the technical implementation of regularization but also underscores its practical significance in sports analytics, particularly in the realm of football strategies for the French team. This exploration marks a significant step towards employing cutting-edge AI methodologies to enhance performance in sports scenarios, reflecting the intersection of technology and athletics.</p>
+</section>
+<section id="data-loading-and-exploration" class="level2">
+<h2 class="anchored" data-anchor-id="data-loading-and-exploration">Data Loading and Exploration</h2>
+<section id="library-import-and-configuration" class="level3">
+<h3 class="anchored" data-anchor-id="library-import-and-configuration">Library Import and Configuration</h3>
+<p>This section focuses on importing essential libraries necessary for the project. It includes the following libraries:</p>
+<ul>
+<li><strong>NumPy:</strong> Used for numerical computations and array operations.</li>
+<li><strong>Matplotlib:</strong> Utilized for data visualization and plotting graphs.</li>
+<li><strong>Scikit-learn (sklearn):</strong> Provides machine learning algorithms and tools.</li>
+<li><strong>SciPy (scipy.io):</strong> Used for scientific computing and handling input/output operations.</li>
+</ul>
+<p>Additionally, the code snippet configures the default parameters for Matplotlib plots, setting the figure size, interpolation method, and color map for visualizations within the notebook environment.</p>
+<p>The <code>%matplotlib inline</code> command ensures that Matplotlib plots are displayed inline within the Jupyter Notebook, allowing for immediate visualization of graphs and figures.</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sklearn</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sklearn.datasets</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.io</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.figsize'</span>] <span class="op">=</span> (<span class="fl">7.0</span>, <span class="fl">4.0</span>) <span class="co"># set default size of plots</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'image.interpolation'</span>] <span class="op">=</span> <span class="st">'nearest'</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'image.cmap'</span>] <span class="op">=</span> <span class="st">'gray'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="dataset-loading-and-visualization" class="level2">
+<h2 class="anchored" data-anchor-id="dataset-loading-and-visualization">Dataset Loading and Visualization</h2>
+<p>Description: This section handles the loading and preparation of the dataset required for the French Football Corporation’s analysis. It involves importing the dataset using <code>scipy.io.loadmat</code>, followed by partitioning it into training and testing subsets (<code>train_X</code>, <code>train_Y</code>, <code>test_X</code>, <code>test_Y</code>). Additionally, a scatter plot visualization using <code>plt.scatter</code> displays the distribution of the training data, aiding in understanding the dataset’s structure and characteristics.</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> scipy.io.loadmat(<span class="st">'datasets/data.mat'</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>train_X <span class="op">=</span> data[<span class="st">'X'</span>].T</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>train_Y <span class="op">=</span> data[<span class="st">'y'</span>].T</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>test_X <span class="op">=</span> data[<span class="st">'Xval'</span>].T</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>test_Y <span class="op">=</span> data[<span class="st">'yval'</span>].T</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>plt.scatter(train_X[<span class="dv">0</span>, :], train_X[<span class="dv">1</span>, :], c<span class="op">=</span>train_Y, s<span class="op">=</span><span class="dv">40</span>, cmap<span class="op">=</span>plt.cm.Spectral)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="football_files/figure-html/cell-3-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="neural-network-implementation" class="level2">
+<h2 class="anchored" data-anchor-id="neural-network-implementation">Neural Network Implementation</h2>
+<section id="neural-network-implementation-for-binary-classification" class="level3">
+<h3 class="anchored" data-anchor-id="neural-network-implementation-for-binary-classification">Neural Network Implementation for Binary Classification</h3>
+<p>This section of the code defines fundamental functions required to build and train a neural network for binary classification. It begins with essential activation functions like sigmoid and ReLU, necessary for the network’s forward propagation.</p>
+<ol type="1">
+<li><strong>Sigmoid and ReLU Functions</strong>:
+<ul>
+<li><code>sigmoid(x)</code>: Computes the sigmoid function for scalar or numpy arrays.</li>
+<li><code>relu(x)</code>: Calculates the rectified linear unit (ReLU) for scalar or numpy arrays.</li>
+</ul></li>
+</ol>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sigmoid(x):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Compute the sigmoid of x</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Arguments:</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">    x -- A scalar or numpy array of any size.</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">    Return:</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">    s -- sigmoid(x)</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>np.exp(<span class="op">-</span>x))</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> s</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> relu(x):</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">    Compute the relu of x</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">    Arguments:</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">    x -- A scalar or numpy array of any size.</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">    Return:</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co">    s -- relu(x)</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> np.maximum(<span class="dv">0</span>,x)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> s</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="2" type="1">
+<li><strong>Parameter Initialization</strong>:
+<ul>
+<li><code>initialize_parameters(layer_dims)</code>: Initializes the weights and biases for the neural network layers using a Python dictionary, given the dimensions of each layer.</li>
+</ul></li>
+</ol>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> initialize_parameters(layer_dims):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Arguments:</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">    layer_dims -- python array (list) containing the dimensions of each layer in our network</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">    parameters -- python dictionary containing your parameters "W1", "b1", ..., "WL", "bL":</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">                    W1 -- weight matrix of shape (layer_dims[l], layer_dims[l-1])</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">                    b1 -- bias vector of shape (layer_dims[l], 1)</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">                    Wl -- weight matrix of shape (layer_dims[l-1], layer_dims[l])</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">                    bl -- bias vector of shape (1, layer_dims[l])</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">                    </span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">    Tips:</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">    - For example: the layer_dims for the "Planar Data classification model" would have been [2,2,1]. </span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">    This means W1's shape was (2,2), b1 was (1,2), W2 was (2,1) and b2 was (1,1). Now you have to generalize it!</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">    - In the for loop, use parameters['W' + str(l)] to access Wl, where l is the iterative integer.</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    np.random.seed(<span class="dv">3</span>)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    parameters <span class="op">=</span> {}</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    L <span class="op">=</span> <span class="bu">len</span>(layer_dims) <span class="co"># number of layers in the network</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> l <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, L):</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>        parameters[<span class="st">'W'</span> <span class="op">+</span> <span class="bu">str</span>(l)] <span class="op">=</span> np.random.randn(layer_dims[l], layer_dims[l<span class="op">-</span><span class="dv">1</span>]) <span class="op">/</span> np.sqrt(layer_dims[l<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        parameters[<span class="st">'b'</span> <span class="op">+</span> <span class="bu">str</span>(l)] <span class="op">=</span> np.zeros((layer_dims[l], <span class="dv">1</span>))</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">assert</span>(parameters[<span class="st">'W'</span> <span class="op">+</span> <span class="bu">str</span>(l)].shape <span class="op">==</span> (layer_dims[l], layer_dims[l<span class="op">-</span><span class="dv">1</span>]))</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">assert</span>(parameters[<span class="st">'b'</span> <span class="op">+</span> <span class="bu">str</span>(l)].shape <span class="op">==</span> (layer_dims[l], <span class="dv">1</span>))</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> parameters</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="3" type="1">
+<li><strong>Forward Propagation</strong>:
+<ul>
+<li><code>forward_propagation(X, parameters)</code>: Implements the forward propagation steps through the neural network layers, culminating in the output layer’s sigmoid activation.</li>
+</ul></li>
+</ol>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> forward_propagation(X, parameters):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Implements the forward propagation (and computes the loss) presented in Figure 2.</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Arguments:</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">    X -- input dataset, of shape (input size, number of examples)</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">    parameters -- python dictionary containing your parameters "W1", "b1", "W2", "b2", "W3", "b3":</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">                    W1 -- weight matrix of shape ()</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">                    b1 -- bias vector of shape ()</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">                    W2 -- weight matrix of shape ()</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">                    b2 -- bias vector of shape ()</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">                    W3 -- weight matrix of shape ()</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">                    b3 -- bias vector of shape ()</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co">    loss -- the loss function (vanilla logistic loss)</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># retrieve parameters</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    W1 <span class="op">=</span> parameters[<span class="st">"W1"</span>]</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    b1 <span class="op">=</span> parameters[<span class="st">"b1"</span>]</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    W2 <span class="op">=</span> parameters[<span class="st">"W2"</span>]</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    b2 <span class="op">=</span> parameters[<span class="st">"b2"</span>]</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    W3 <span class="op">=</span> parameters[<span class="st">"W3"</span>]</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    b3 <span class="op">=</span> parameters[<span class="st">"b3"</span>]</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># LINEAR -&gt; RELU -&gt; LINEAR -&gt; RELU -&gt; LINEAR -&gt; SIGMOID</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    Z1 <span class="op">=</span> np.dot(W1, X) <span class="op">+</span> b1</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    A1 <span class="op">=</span> relu(Z1)</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    Z2 <span class="op">=</span> np.dot(W2, A1) <span class="op">+</span> b2</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    A2 <span class="op">=</span> relu(Z2)</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    Z3 <span class="op">=</span> np.dot(W3, A2) <span class="op">+</span> b3</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    A3 <span class="op">=</span> sigmoid(Z3)</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    cache <span class="op">=</span> (Z1, A1, W1, b1, Z2, A2, W2, b2, Z3, A3, W3, b3)</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> A3, cache</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="4" type="1">
+<li><strong>Backward Propagation</strong>:
+<ul>
+<li><code>backward_propagation(X, Y, cache)</code>: Implements the backward propagation, computing gradients with respect to each parameter and activation variable using the cached values from forward propagation.</li>
+</ul></li>
+</ol>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> backward_propagation(X, Y, cache):</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Implement the backward propagation presented in figure 2.</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Arguments:</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">    X -- input dataset, of shape (input size, number of examples)</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Y -- true "label" vector (containing 0 if cat, 1 if non-cat)</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">    cache -- cache output from forward_propagation()</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">    gradients -- A dictionary with the gradients with respect to each parameter, activation and pre-activation variables</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    m <span class="op">=</span> X.shape[<span class="dv">1</span>]</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    (Z1, A1, W1, b1, Z2, A2, W2, b2, Z3, A3, W3, b3) <span class="op">=</span> cache</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    dZ3 <span class="op">=</span> A3 <span class="op">-</span> Y</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    dW3 <span class="op">=</span> <span class="fl">1.</span><span class="op">/</span>m <span class="op">*</span> np.dot(dZ3, A2.T)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    db3 <span class="op">=</span> <span class="fl">1.</span><span class="op">/</span>m <span class="op">*</span> np.<span class="bu">sum</span>(dZ3, axis<span class="op">=</span><span class="dv">1</span>, keepdims <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    dA2 <span class="op">=</span> np.dot(W3.T, dZ3)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    dZ2 <span class="op">=</span> np.multiply(dA2, np.int64(A2 <span class="op">&gt;</span> <span class="dv">0</span>))</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    dW2 <span class="op">=</span> <span class="fl">1.</span><span class="op">/</span>m <span class="op">*</span> np.dot(dZ2, A1.T)</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    db2 <span class="op">=</span> <span class="fl">1.</span><span class="op">/</span>m <span class="op">*</span> np.<span class="bu">sum</span>(dZ2, axis<span class="op">=</span><span class="dv">1</span>, keepdims <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    dA1 <span class="op">=</span> np.dot(W2.T, dZ2)</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    dZ1 <span class="op">=</span> np.multiply(dA1, np.int64(A1 <span class="op">&gt;</span> <span class="dv">0</span>))</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    dW1 <span class="op">=</span> <span class="fl">1.</span><span class="op">/</span>m <span class="op">*</span> np.dot(dZ1, X.T)</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    db1 <span class="op">=</span> <span class="fl">1.</span><span class="op">/</span>m <span class="op">*</span> np.<span class="bu">sum</span>(dZ1, axis<span class="op">=</span><span class="dv">1</span>, keepdims <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    gradients <span class="op">=</span> {<span class="st">"dZ3"</span>: dZ3, <span class="st">"dW3"</span>: dW3, <span class="st">"db3"</span>: db3,</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"dA2"</span>: dA2, <span class="st">"dZ2"</span>: dZ2, <span class="st">"dW2"</span>: dW2, <span class="st">"db2"</span>: db2,</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"dA1"</span>: dA1, <span class="st">"dZ1"</span>: dZ1, <span class="st">"dW1"</span>: dW1, <span class="st">"db1"</span>: db1}</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> gradients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="5" type="1">
+<li><strong>Parameter Updates using Gradient Descent</strong>:
+<ul>
+<li><code>update_parameters(parameters, grads, learning_rate)</code>: Updates the parameters (weights and biases) using the calculated gradients and a specified learning rate.</li>
+</ul></li>
+</ol>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> update_parameters(parameters, grads, learning_rate):</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Update parameters using gradient descent</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Arguments:</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">    parameters -- python dictionary containing your parameters:</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">                    parameters['W' + str(i)] = Wi</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">                    parameters['b' + str(i)] = bi</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">    grads -- python dictionary containing your gradients for each parameters:</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">                    grads['dW' + str(i)] = dWi</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">                    grads['db' + str(i)] = dbi</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">    learning_rate -- the learning rate, scalar.</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">    parameters -- python dictionary containing your updated parameters </span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(parameters) <span class="op">//</span> <span class="dv">2</span> <span class="co"># number of layers in the neural networks</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Update rule for each parameter</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>        parameters[<span class="st">"W"</span> <span class="op">+</span> <span class="bu">str</span>(k<span class="op">+</span><span class="dv">1</span>)] <span class="op">=</span> parameters[<span class="st">"W"</span> <span class="op">+</span> <span class="bu">str</span>(k<span class="op">+</span><span class="dv">1</span>)] <span class="op">-</span> learning_rate <span class="op">*</span> grads[<span class="st">"dW"</span> <span class="op">+</span> <span class="bu">str</span>(k<span class="op">+</span><span class="dv">1</span>)]</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>        parameters[<span class="st">"b"</span> <span class="op">+</span> <span class="bu">str</span>(k<span class="op">+</span><span class="dv">1</span>)] <span class="op">=</span> parameters[<span class="st">"b"</span> <span class="op">+</span> <span class="bu">str</span>(k<span class="op">+</span><span class="dv">1</span>)] <span class="op">-</span> learning_rate <span class="op">*</span> grads[<span class="st">"db"</span> <span class="op">+</span> <span class="bu">str</span>(k<span class="op">+</span><span class="dv">1</span>)]</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> parameters</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="6" type="1">
+<li><strong>Prediction and Evaluation</strong>:
+<ul>
+<li><code>predict(X, y, parameters)</code>: Predicts outcomes based on the trained neural network and computes accuracy for the given dataset.</li>
+<li><code>compute_cost(a3, Y)</code>: Computes the cost function for the binary classification model using the logistic loss.</li>
+</ul></li>
+</ol>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> predict(X, y, parameters):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">    This function is used to predict the results of a  n-layer neural network.</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Arguments:</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">    X -- data set of examples you would like to label</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">    parameters -- parameters of the trained model</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">    p -- predictions for the given dataset X</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    m <span class="op">=</span> X.shape[<span class="dv">1</span>]</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> np.zeros((<span class="dv">1</span>,m), dtype <span class="op">=</span> <span class="bu">int</span>)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Forward propagation</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    a3, caches <span class="op">=</span> forward_propagation(X, parameters)</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># convert probas to 0/1 predictions</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, a3.shape[<span class="dv">1</span>]):</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> a3[<span class="dv">0</span>,i] <span class="op">&gt;</span> <span class="fl">0.5</span>:</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>            p[<span class="dv">0</span>,i] <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>            p[<span class="dv">0</span>,i] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Accuracy: "</span>  <span class="op">+</span> <span class="bu">str</span>(np.mean((p[<span class="dv">0</span>,:] <span class="op">==</span> y[<span class="dv">0</span>,:]))))</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> p</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_cost(a3, Y):</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a><span class="co">    Implement the cost function</span></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="co">    Arguments:</span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="co">    a3 -- post-activation, output of forward propagation</span></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="co">    Y -- "true" labels vector, same shape as a3</span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a><span class="co">    cost - value of the cost function</span></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>    m <span class="op">=</span> Y.shape[<span class="dv">1</span>]</span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>    logprobs <span class="op">=</span> np.multiply(<span class="op">-</span>np.log(a3),Y) <span class="op">+</span> np.multiply(<span class="op">-</span>np.log(<span class="dv">1</span> <span class="op">-</span> a3), <span class="dv">1</span> <span class="op">-</span> Y)</span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>    cost <span class="op">=</span> <span class="fl">1.</span><span class="op">/</span>m <span class="op">*</span> np.nansum(logprobs)</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> cost</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>These functions are essential building blocks necessary to construct, train, and evaluate a neural network for binary classification tasks. They perform forward and backward propagation, parameter initialization, updating, prediction, and cost computation, making them fundamental to constructing a neural network model.</p>
+</section>
+<section id="neural-network-model-with-regularization-and-dropout-techniques" class="level3">
+<h3 class="anchored" data-anchor-id="neural-network-model-with-regularization-and-dropout-techniques">Neural Network Model with Regularization and Dropout Techniques</h3>
+<p>This section of the code presents a comprehensive neural network model incorporating various functionalities crucial for robust and optimized training:</p>
+<ol type="1">
+<li><strong>Model Construction</strong>:
+<ul>
+<li><code>model(X, Y, learning_rate, num_iterations, print_cost, lambd, keep_prob)</code>: Implements a three-layer neural network with optional features for L2 regularization and dropout. It performs forward and backward propagation while updating parameters iteratively through gradient descent.</li>
+</ul></li>
+</ol>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> model(X, Y, learning_rate <span class="op">=</span> <span class="fl">0.3</span>, num_iterations <span class="op">=</span> <span class="dv">30000</span>, print_cost <span class="op">=</span> <span class="va">True</span>, lambd <span class="op">=</span> <span class="dv">0</span>, keep_prob <span class="op">=</span> <span class="dv">1</span>):</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Implements a three-layer neural network: LINEAR-&gt;RELU-&gt;LINEAR-&gt;RELU-&gt;LINEAR-&gt;SIGMOID.</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Arguments:</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">    X -- input data, of shape (input size, number of examples)</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Y -- true "label" vector (1 for blue dot / 0 for red dot), of shape (output size, number of examples)</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">    learning_rate -- learning rate of the optimization</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">    num_iterations -- number of iterations of the optimization loop</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">    print_cost -- If True, print the cost every 10000 iterations</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">    lambd -- regularization hyperparameter, scalar</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">    keep_prob - probability of keeping a neuron active during drop-out, scalar.</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co">    parameters -- parameters learned by the model. They can then be used to predict.</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    grads <span class="op">=</span> {}</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    costs <span class="op">=</span> []                            <span class="co"># to keep track of the cost</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    m <span class="op">=</span> X.shape[<span class="dv">1</span>]                        <span class="co"># number of examples</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    layers_dims <span class="op">=</span> [X.shape[<span class="dv">0</span>], <span class="dv">20</span>, <span class="dv">3</span>, <span class="dv">1</span>]</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Initialize parameters dictionary.</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    parameters <span class="op">=</span> initialize_parameters(layers_dims)</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Loop (gradient descent)</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, num_iterations):</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Forward propagation: LINEAR -&gt; RELU -&gt; LINEAR -&gt; RELU -&gt; LINEAR -&gt; SIGMOID.</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> keep_prob <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>            a3, cache <span class="op">=</span> forward_propagation(X, parameters)</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> keep_prob <span class="op">&lt;</span> <span class="dv">1</span>:</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>            a3, cache <span class="op">=</span> forward_propagation_with_dropout(X, parameters, keep_prob)</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Cost function</span></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> lambd <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>            cost <span class="op">=</span> compute_cost(a3, Y)</span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>            cost <span class="op">=</span> compute_cost_with_regularization(a3, Y, parameters, lambd)</span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Backward propagation.</span></span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>        <span class="cf">assert</span> (lambd <span class="op">==</span> <span class="dv">0</span> <span class="kw">or</span> keep_prob <span class="op">==</span> <span class="dv">1</span>) </span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> lambd <span class="op">==</span> <span class="dv">0</span> <span class="kw">and</span> keep_prob <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>            grads <span class="op">=</span> backward_propagation(X, Y, cache)</span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> lambd <span class="op">!=</span> <span class="dv">0</span>:</span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a>            grads <span class="op">=</span> backward_propagation_with_regularization(X, Y, cache, lambd)</span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> keep_prob <span class="op">&lt;</span> <span class="dv">1</span>:</span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a>            grads <span class="op">=</span> backward_propagation_with_dropout(X, Y, cache, keep_prob)</span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Update parameters.</span></span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a>        parameters <span class="op">=</span> update_parameters(parameters, grads, learning_rate)</span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Print the loss every 10000 iterations</span></span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> print_cost <span class="kw">and</span> i <span class="op">%</span> <span class="dv">10000</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">"Cost after iteration </span><span class="sc">{}</span><span class="st">: </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(i, cost))</span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> print_cost <span class="kw">and</span> i <span class="op">%</span> <span class="dv">1000</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a>            costs.append(cost)</span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plot the cost</span></span>
+<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a>    plt.plot(costs)</span>
+<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">'cost'</span>)</span>
+<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">'iterations (x1,000)'</span>)</span>
+<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="st">"Learning rate ="</span> <span class="op">+</span> <span class="bu">str</span>(learning_rate))</span>
+<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> parameters</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="2" type="1">
+<li><strong>Regularization Techniques</strong>:
+<ul>
+<li><code>compute_cost_with_regularization(A3, Y, parameters, lambd)</code>: Computes the cost function for the model with L2 regularization to prevent overfitting.</li>
+</ul></li>
+</ol>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_cost_with_regularization(A3, Y, parameters, lambd):</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Implement the cost function with L2 regularization.</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Arguments:</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">    A3 -- post-activation, output of forward propagation, of shape (output size, number of examples)</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Y -- "true" labels vector, of shape (output size, number of examples)</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">    parameters -- python dictionary containing parameters of the model</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">    cost - value of the regularized loss function (formula (2))</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    m <span class="op">=</span> Y.shape[<span class="dv">1</span>]</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    W <span class="op">=</span> {key: value <span class="cf">for</span> key, value <span class="kw">in</span> parameters.items() <span class="cf">if</span> key.startswith(<span class="st">'W'</span>)}</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute cross-entropy cost</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    cross_entropy_cost <span class="op">=</span> compute_cost(A3, Y)</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute L2 regularization term</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    L2_regularization_cost <span class="op">=</span> (lambd <span class="op">/</span> (<span class="dv">2</span> <span class="op">*</span> m)) <span class="op">*</span> np.<span class="bu">sum</span>([np.<span class="bu">sum</span>(np.square(W[key])) <span class="cf">for</span> key <span class="kw">in</span> W])</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute total regularized cost</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>    cost <span class="op">=</span> cross_entropy_cost <span class="op">+</span> L2_regularization_cost</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> cost</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><code>backward_propagation_with_regularization(X, Y, cache, lambd)</code>: Implements backward propagation considering L2 regularization.</li>
+</ul>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> backward_propagation_with_regularization(X, Y, cache, lambd):</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Implements the backward propagation of our baseline model to which we added an L2 regularization.</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Arguments:</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">    X -- input dataset, of shape (input size, number of examples)</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Y -- "true" labels vector, of shape (output size, number of examples)</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">    cache -- cache output from forward_propagation()</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co">    lambd -- regularization hyperparameter, scalar</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co">    gradients -- A dictionary with the gradients with respect to each parameter, activation and pre-activation variables</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    m <span class="op">=</span> X.shape[<span class="dv">1</span>]</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    (Z1, A1, W1, b1, Z2, A2, W2, b2, Z3, A3, W3, b3) <span class="op">=</span> cache</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    dZ3 <span class="op">=</span> A3 <span class="op">-</span> Y</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>    dW3 <span class="op">=</span> (<span class="dv">1</span> <span class="op">/</span> m) <span class="op">*</span> np.dot(dZ3, A2.T) <span class="op">+</span> (lambd <span class="op">/</span> m) <span class="op">*</span> W3</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    db3 <span class="op">=</span> <span class="fl">1.</span> <span class="op">/</span> m <span class="op">*</span> np.<span class="bu">sum</span>(dZ3, axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>    dA2 <span class="op">=</span> np.dot(W3.T, dZ3)</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>    dZ2 <span class="op">=</span> np.multiply(dA2, np.int64(A2 <span class="op">&gt;</span> <span class="dv">0</span>))</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>    dW2 <span class="op">=</span> (<span class="dv">1</span> <span class="op">/</span> m) <span class="op">*</span> np.dot(dZ2, A1.T) <span class="op">+</span> (lambd <span class="op">/</span> m) <span class="op">*</span> W2</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>    db2 <span class="op">=</span> <span class="fl">1.</span> <span class="op">/</span> m <span class="op">*</span> np.<span class="bu">sum</span>(dZ2, axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>    dA1 <span class="op">=</span> np.dot(W2.T, dZ2)</span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>    dZ1 <span class="op">=</span> np.multiply(dA1, np.int64(A1 <span class="op">&gt;</span> <span class="dv">0</span>))</span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>    dW1 <span class="op">=</span> (<span class="dv">1</span> <span class="op">/</span> m) <span class="op">*</span> np.dot(dZ1, X.T) <span class="op">+</span> (lambd <span class="op">/</span> m) <span class="op">*</span> W1</span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>    db1 <span class="op">=</span> <span class="fl">1.</span> <span class="op">/</span> m <span class="op">*</span> np.<span class="bu">sum</span>(dZ1, axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>    gradients <span class="op">=</span> {</span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>        <span class="st">"dZ3"</span>: dZ3, <span class="st">"dW3"</span>: dW3, <span class="st">"db3"</span>: db3, <span class="st">"dA2"</span>: dA2,</span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>        <span class="st">"dZ2"</span>: dZ2, <span class="st">"dW2"</span>: dW2, <span class="st">"db2"</span>: db2, <span class="st">"dA1"</span>: dA1,</span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>        <span class="st">"dZ1"</span>: dZ1, <span class="st">"dW1"</span>: dW1, <span class="st">"db1"</span>: db1</span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> gradients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="3" type="1">
+<li><strong>Dropout Technique</strong>:
+<ul>
+<li><code>forward_propagation_with_dropout(X, parameters, keep_prob)</code>: Implements forward propagation with dropout, randomly deactivating neurons to enhance generalization.</li>
+</ul></li>
+</ol>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> forward_propagation_with_dropout(X, parameters, keep_prob <span class="op">=</span> <span class="fl">0.5</span>):</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Implements the forward propagation: LINEAR -&gt; RELU + DROPOUT -&gt; LINEAR -&gt; RELU + DROPOUT -&gt; LINEAR -&gt; SIGMOID.</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Arguments:</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">    X -- input dataset, of shape (2, number of examples)</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">    parameters -- python dictionary containing your parameters "W1", "b1", "W2", "b2", "W3", "b3":</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">                    W1 -- weight matrix of shape (20, 2)</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">                    b1 -- bias vector of shape (20, 1)</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">                    W2 -- weight matrix of shape (3, 20)</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co">                    b2 -- bias vector of shape (3, 1)</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co">                    W3 -- weight matrix of shape (1, 3)</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co">                    b3 -- bias vector of shape (1, 1)</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co">    keep_prob - probability of keeping a neuron active during drop-out, scalar</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="co">    A3 -- last activation value, output of the forward propagation, of shape (1,1)</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="co">    cache -- tuple, information stored for computing the backward propagation</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>    np.random.seed(<span class="dv">1</span>)</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Retrieve parameters</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>    W1, b1, W2, b2, W3, b3 <span class="op">=</span> parameters[<span class="st">"W1"</span>], parameters[<span class="st">"b1"</span>], parameters[<span class="st">"W2"</span>], parameters[<span class="st">"b2"</span>], parameters[<span class="st">"W3"</span>], parameters[<span class="st">"b3"</span>]</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># LINEAR -&gt; RELU -&gt; LINEAR -&gt; RELU -&gt; LINEAR -&gt; SIGMOID</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>    Z1 <span class="op">=</span> np.dot(W1, X) <span class="op">+</span> b1</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>    A1 <span class="op">=</span> relu(Z1)</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>    D1 <span class="op">=</span> np.random.rand(A1.shape[<span class="dv">0</span>], A1.shape[<span class="dv">1</span>])</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>    D1 <span class="op">=</span> (D1 <span class="op">&lt;</span> keep_prob).astype(<span class="bu">int</span>)</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>    A1 <span class="op">*=</span> D1</span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>    A1 <span class="op">/=</span> keep_prob</span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>    Z2 <span class="op">=</span> np.dot(W2, A1) <span class="op">+</span> b2</span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>    A2 <span class="op">=</span> relu(Z2)</span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>    D2 <span class="op">=</span> np.random.rand(A2.shape[<span class="dv">0</span>], A2.shape[<span class="dv">1</span>])</span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>    D2 <span class="op">=</span> (D2 <span class="op">&lt;</span> keep_prob).astype(<span class="bu">int</span>)</span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>    A2 <span class="op">*=</span> D2</span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>    A2 <span class="op">/=</span> keep_prob</span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>    Z3 <span class="op">=</span> np.dot(W3, A2) <span class="op">+</span> b3</span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>    A3 <span class="op">=</span> sigmoid(Z3)</span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a>    cache <span class="op">=</span> (Z1, D1, A1, W1, b1, Z2, D2, A2, W2, b2, Z3, A3, W3, b3)</span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> A3, cache</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><code>backward_propagation_with_dropout(X, Y, cache, keep_prob)</code>: Implements backward propagation considering dropout, managing deactivated neurons’ impact on gradients.</li>
+</ul>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> backward_propagation_with_dropout(X, Y, cache, keep_prob):</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Implements the backward propagation of our baseline model to which we added dropout.</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Arguments:</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">    X -- input dataset, of shape (2, number of examples)</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Y -- "true" labels vector, of shape (output size, number of examples)</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">    cache -- cache output from forward_propagation_with_dropout()</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">    keep_prob - probability of keeping a neuron active during drop-out, scalar</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">    gradients -- A dictionary with the gradients with respect to each parameter, activation and pre-activation variables</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    m <span class="op">=</span> X.shape[<span class="dv">1</span>]</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    (Z1, D1, A1, W1, b1, Z2, D2, A2, W2, b2, Z3, A3, W3, b3) <span class="op">=</span> cache</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    dZ3 <span class="op">=</span> A3 <span class="op">-</span> Y</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    dW3 <span class="op">=</span> <span class="fl">1.</span><span class="op">/</span>m <span class="op">*</span> np.dot(dZ3, A2.T)</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    db3 <span class="op">=</span> <span class="fl">1.</span><span class="op">/</span>m <span class="op">*</span> np.<span class="bu">sum</span>(dZ3, axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    dA2 <span class="op">=</span> np.dot(W3.T, dZ3)</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Apply dropout backward</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>    dA2 <span class="op">*=</span> D2</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>    dA2 <span class="op">/=</span> keep_prob</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>    dZ2 <span class="op">=</span> np.multiply(dA2, np.int64(A2 <span class="op">&gt;</span> <span class="dv">0</span>))</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>    dW2 <span class="op">=</span> <span class="fl">1.</span><span class="op">/</span>m <span class="op">*</span> np.dot(dZ2, A1.T)</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>    db2 <span class="op">=</span> <span class="fl">1.</span><span class="op">/</span>m <span class="op">*</span> np.<span class="bu">sum</span>(dZ2, axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>    dA1 <span class="op">=</span> np.dot(W2.T, dZ2)</span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Apply dropout backward</span></span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>    dA1 <span class="op">*=</span> D1</span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>    dA1 <span class="op">/=</span> keep_prob</span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>    dZ1 <span class="op">=</span> np.multiply(dA1, np.int64(A1 <span class="op">&gt;</span> <span class="dv">0</span>))</span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>    dW1 <span class="op">=</span> <span class="fl">1.</span><span class="op">/</span>m <span class="op">*</span> np.dot(dZ1, X.T)</span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>    db1 <span class="op">=</span> <span class="fl">1.</span><span class="op">/</span>m <span class="op">*</span> np.<span class="bu">sum</span>(dZ1, axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>    gradients <span class="op">=</span> {</span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a>        <span class="st">"dZ3"</span>: dZ3, <span class="st">"dW3"</span>: dW3, <span class="st">"db3"</span>: db3, <span class="st">"dA2"</span>: dA2,</span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a>        <span class="st">"dZ2"</span>: dZ2, <span class="st">"dW2"</span>: dW2, <span class="st">"db2"</span>: db2, <span class="st">"dA1"</span>: dA1,</span>
+<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a>        <span class="st">"dZ1"</span>: dZ1, <span class="st">"dW1"</span>: dW1, <span class="st">"db1"</span>: db1</span>
+<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> gradients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The model conducts forward propagation using rectified linear units (ReLU) and outputting with a sigmoid activation for binary classification tasks. It enables the incorporation of L2 regularization and dropout techniques as regularization strategies for mitigating overfitting.</p>
+<p>The code provides a flexible neural network framework allowing the integration of L2 regularization and dropout to enhance model robustness and prevent overfitting, crucial for efficient and effective training in various scenarios.</p>
+</section>
+</section>
+<section id="model-training-and-evaluation" class="level2">
+<h2 class="anchored" data-anchor-id="model-training-and-evaluation">Model Training and Evaluation</h2>
+<section id="model-training-and-evaluation-no-regularization" class="level3">
+<h3 class="anchored" data-anchor-id="model-training-and-evaluation-no-regularization">Model Training and Evaluation (No Regularization)</h3>
+<p>This section encapsulates the training and evaluation process of the neural network model without any regularization technique applied. The code snippet showcases the training iterations and the associated cost function values. The training is performed on the provided training dataset (<code>train_X</code>, <code>train_Y</code>), and the trained model’s predictions are evaluated on both the training and test datasets (<code>test_X</code>, <code>test_Y</code>).</p>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>parameters <span class="op">=</span> model(train_X, train_Y)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">"On the training set:"</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>predictions_train <span class="op">=</span> predict(train_X, train_Y, parameters)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">"On the test set:"</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>predictions_test <span class="op">=</span> predict(test_X, test_Y, parameters)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Cost after iteration 0: 0.6557412523481002
+Cost after iteration 10000: 0.16329987525724216
+Cost after iteration 20000: 0.13851642423254343
+On the training set:
+Accuracy: 0.9478672985781991
+On the test set:
+Accuracy: 0.915</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="football_files/figure-html/cell-15-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>The output displayed indicates the cost values at different iterations during the training process:</p>
+<ul>
+<li>Initial cost at iteration 0: 0.6557412523481002</li>
+<li>Cost after 10000 iterations: 0.16329987525724216</li>
+<li>Cost after 20000 iterations: 0.13851642423254343</li>
+</ul>
+<p>This section demonstrates the iterative improvement of the model’s performance over multiple iterations, allowing insights into the convergence of the cost function during training. It provides a glimpse into the model’s learning process and its predictive capability on both the training and test sets without applying any form of regularization.</p>
+</section>
+<section id="model-training-and-evaluation-l2-regularization" class="level3">
+<h3 class="anchored" data-anchor-id="model-training-and-evaluation-l2-regularization">Model Training and Evaluation (L2 Regularization)</h3>
+<p>This section involves training and evaluating the neural network model while applying L2 regularization with a regularization parameter (<code>lambd</code>) set to 0.7. The provided code snippet executes the model training on the <code>train_X</code> and <code>train_Y</code> datasets, followed by evaluating the trained model’s predictions on both the training and test datasets (<code>test_X</code>, <code>test_Y</code>).</p>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>parameters <span class="op">=</span> model(train_X, train_Y, lambd <span class="op">=</span> <span class="fl">0.7</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">"On the train set:"</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>predictions_train <span class="op">=</span> predict(train_X, train_Y, parameters)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">"On the test set:"</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>predictions_test <span class="op">=</span> predict(test_X, test_Y, parameters)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Cost after iteration 0: 0.6974484493131264
+Cost after iteration 10000: 0.2684918873282239
+Cost after iteration 20000: 0.2680916337127301
+On the train set:
+Accuracy: 0.9383886255924171
+On the test set:
+Accuracy: 0.93</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="football_files/figure-html/cell-16-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>The displayed output showcases the cost values at different iterations during the training process:</p>
+<ul>
+<li>Initial cost at iteration 0: 0.6974484493131264</li>
+<li>Cost after 10000 iterations: 0.2684918873282239</li>
+<li>Cost after 20000 iterations: 0.2680916337127301</li>
+</ul>
+<p>This section illustrates the impact of L2 regularization on the model’s learning process by monitoring the convergence of the cost function over multiple iterations. It provides insights into how the regularization parameter affects the model’s performance, controlling overfitting and enhancing generalization, as reflected in the cost function’s behavior on both the training and test datasets.</p>
+</section>
+<section id="model-training-and-evaluation-dropout-regularization" class="level3">
+<h3 class="anchored" data-anchor-id="model-training-and-evaluation-dropout-regularization">Model Training and Evaluation (Dropout Regularization)</h3>
+<p>This section focuses on training and evaluating the neural network model with the application of Dropout regularization. The code snippet demonstrates the training of the model by specifying a dropout probability of 0.86 (<code>keep_prob = 0.86</code>) and a learning rate of 0.3 (<code>learning_rate = 0.3</code>).</p>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>parameters <span class="op">=</span> model(train_X, train_Y, keep_prob <span class="op">=</span> <span class="fl">0.86</span>, learning_rate <span class="op">=</span> <span class="fl">0.3</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">"On the train set:"</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>predictions_train <span class="op">=</span> predict(train_X, train_Y, parameters)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">"On the test set:"</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>predictions_test <span class="op">=</span> predict(test_X, test_Y, parameters)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Cost after iteration 0: 0.6543912405149825
+Cost after iteration 10000: 0.061016986574905605
+Cost after iteration 20000: 0.060582435798513114
+On the train set:
+Accuracy: 0.9289099526066351
+On the test set:
+Accuracy: 0.95</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/tmp/ipykernel_39758/630415195.py:43: RuntimeWarning: divide by zero encountered in log
+  logprobs = np.multiply(-np.log(a3),Y) + np.multiply(-np.log(1 - a3), 1 - Y)
+/tmp/ipykernel_39758/630415195.py:43: RuntimeWarning: invalid value encountered in multiply
+  logprobs = np.multiply(-np.log(a3),Y) + np.multiply(-np.log(1 - a3), 1 - Y)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="football_files/figure-html/cell-17-output-3.png" class="img-fluid"></p>
+</div>
+</div>
+<p>The output provided indicates the cost values at different iterations during the training process:</p>
+<ul>
+<li>Initial cost at iteration 0: 0.6543912405149825</li>
+<li>Cost after 10000 iterations: 0.061016986574905605</li>
+<li>Cost after 20000 iterations: 0.060582435798513114</li>
+</ul>
+<p>Additionally, there might be a RuntimeWarning displayed due to encountering divide by zero or invalid value during the logarithmic calculations. The inclusion of Dropout regularization in the model training aims to mitigate overfitting by randomly dropping neurons during each iteration, enhancing the network’s generalization ability.</p>
+<p>This section showcases the iterative reduction in the cost function, signifying the improvement in the model’s performance with the utilization of Dropout regularization, ultimately leading to better generalization on both the training and test datasets.</p>
+</section>
+</section>
+<section id="visualization-of-results" class="level2">
+<h2 class="anchored" data-anchor-id="visualization-of-results">Visualization of Results</h2>
+<p>The code snippet contains two functions, <code>predict_dec</code> and <code>plot_decision_boundary</code>, used for visualizing the decision boundary of a binary classification model.</p>
+<ol type="1">
+<li><p><code>predict_dec(parameters, X)</code>: This function predicts the output using forward propagation based on the input data <code>X</code> and the model’s <code>parameters</code>. It returns a vector of predictions where red indicates 0 and blue indicates 1, with a classification threshold of 0.5.</p></li>
+<li><p><code>plot_decision_boundary(model, X, y)</code>: This function generates and plots the decision boundary for the binary classification model. It sets the minimum and maximum values for the x and y axes, creates a grid of points with a specified distance between them, predicts the function values for the entire grid, and plots the contour plot of the decision boundary. Additionally, it overlays the training examples on the plot, coloring them based on the class label (<code>y</code>).</p></li>
+</ol>
+<p>The <code>plot_decision_boundary</code> function effectively illustrates how the model distinguishes between different classes by visualizing their decision boundary on a 2D plane. The plot showcases the regions where the model predicts each class, aiding in the interpretation and evaluation of the classifier’s performance.</p>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> predict_dec(parameters, X):</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Used for plotting decision boundary.</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Arguments:</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co">    parameters -- python dictionary containing your parameters </span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co">    X -- input data of size (m, K)</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co">    predictions -- vector of predictions of our model (red: 0 / blue: 1)</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Predict using forward propagation and a classification threshold of 0.5</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>    a3, cache <span class="op">=</span> forward_propagation(X, parameters)</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>    predictions <span class="op">=</span> (a3<span class="op">&gt;</span><span class="fl">0.5</span>)</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> predictions</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_decision_boundary(model, X, y):</span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Set min and max values and give it some padding</span></span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>    x_min, x_max <span class="op">=</span> X[<span class="dv">0</span>, :].<span class="bu">min</span>() <span class="op">-</span> <span class="dv">1</span>, X[<span class="dv">0</span>, :].<span class="bu">max</span>() <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>    y_min, y_max <span class="op">=</span> X[<span class="dv">1</span>, :].<span class="bu">min</span>() <span class="op">-</span> <span class="dv">1</span>, X[<span class="dv">1</span>, :].<span class="bu">max</span>() <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>    h <span class="op">=</span> <span class="fl">0.01</span></span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Generate a grid of points with distance h between them</span></span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>    xx, yy <span class="op">=</span> np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))</span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Predict the function value for the whole grid</span></span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>    Z <span class="op">=</span> model(np.c_[xx.ravel(), yy.ravel()])</span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>    Z <span class="op">=</span> Z.reshape(xx.shape)</span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Plot the contour and training examples</span></span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a>    plt.contourf(xx, yy, Z, cmap<span class="op">=</span>plt.cm.Spectral)</span>
+<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">'x2'</span>)</span>
+<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">'x1'</span>)</span>
+<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a>    plt.scatter(X[<span class="dv">0</span>, :], X[<span class="dv">1</span>, :], c<span class="op">=</span>y, cmap<span class="op">=</span>plt.cm.Spectral)</span>
+<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="visualizing-model-performance-without-regularization" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-model-performance-without-regularization">Visualizing Model Performance without Regularization</h3>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Model without regularization"</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>axes <span class="op">=</span> plt.gca()</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>axes.set_xlim([<span class="op">-</span><span class="fl">0.75</span>,<span class="fl">0.40</span>])</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>axes.set_ylim([<span class="op">-</span><span class="fl">0.75</span>,<span class="fl">0.65</span>])</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>plot_decision_boundary(<span class="kw">lambda</span> x: predict_dec(parameters, x.T), train_X, train_Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="football_files/figure-html/cell-19-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="visualizing-model-performance-with-l2-regularization" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-model-performance-with-l2-regularization">Visualizing Model Performance with L2 Regularization</h3>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Model with L2-regularization"</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>axes <span class="op">=</span> plt.gca()</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>axes.set_xlim([<span class="op">-</span><span class="fl">0.75</span>,<span class="fl">0.40</span>])</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>axes.set_ylim([<span class="op">-</span><span class="fl">0.75</span>,<span class="fl">0.65</span>])</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>plot_decision_boundary(<span class="kw">lambda</span> x: predict_dec(parameters, x.T), train_X, train_Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="football_files/figure-html/cell-20-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="visualizing-model-performance-with-dropout" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-model-performance-with-dropout">Visualizing Model Performance with Dropout</h3>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Model with dropout"</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>axes <span class="op">=</span> plt.gca()</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>axes.set_xlim([<span class="op">-</span><span class="fl">0.75</span>,<span class="fl">0.40</span>])</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>axes.set_ylim([<span class="op">-</span><span class="fl">0.75</span>,<span class="fl">0.65</span>])</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>plot_decision_boundary(<span class="kw">lambda</span> x: predict_dec(parameters, x.T), train_X, train_Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="football_files/figure-html/cell-21-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion:</h2>
+<p>The analysis aimed to explore the effects of different regularization techniques, namely No Regularization, L2 Regularization, and Dropout, on the performance of a neural network model developed for the French Football Corporation’s problem.</p>
+<ol type="1">
+<li><strong>No Regularization</strong>:
+<ul>
+<li>Achieved an accuracy of approximately 94.79% on the training set and 91.50% on the test set.</li>
+<li>Without any regularization, the model showed good performance on the training set but slightly lower performance on the unseen test set, indicating a potential issue of overfitting.</li>
+</ul></li>
+<li><strong>L2 Regularization</strong>:
+<ul>
+<li>Demonstrated an accuracy of around 93.84% on the training set and 93.00% on the test set.</li>
+<li>Introducing L2 regularization slightly decreased the accuracy on the training set but significantly improved generalization to the test set. This technique helped alleviate overfitting and led to better performance on unseen data.</li>
+</ul></li>
+<li><strong>Dropout</strong>:
+<ul>
+<li>Attained an accuracy of about 92.89% on the training set and an impressive 95.00% on the test set.</li>
+<li>Employing Dropout regularization also reduced overfitting. It enhanced the model’s ability to generalize to new data, resulting in the highest accuracy among the tested regularization techniques on the test set.</li>
+</ul></li>
+</ol>
+<section id="overall-observations" class="level3">
+<h3 class="anchored" data-anchor-id="overall-observations">Overall Observations:</h3>
+<ul>
+<li>The experiment revealed the importance of regularization techniques in preventing overfitting and improving a model’s generalization to unseen data.</li>
+<li>L2 regularization and Dropout proved to be effective in mitigating overfitting, with Dropout exhibiting the most robust generalization performance on the test set in this context.</li>
+</ul>
+</section>
+<section id="recommendations-and-future-work" class="level3">
+<h3 class="anchored" data-anchor-id="recommendations-and-future-work">Recommendations and Future Work:</h3>
+<ul>
+<li>The results emphasize the significance of incorporating regularization techniques, especially Dropout, when developing neural network models for tasks like predicting optimal positions in football.</li>
+<li>Further investigation into different hyperparameter settings, architectures, or combinations of regularization techniques might yield even better model performance.</li>
+</ul>
+<p>The findings from this analysis underscore the critical role that regularization techniques play in enhancing the robustness and generalization ability of neural network models for real-world applications.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
